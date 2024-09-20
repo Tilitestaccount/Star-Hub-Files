@@ -1,0 +1,5 @@
+if game.PlaceId == 6360478118 or game.PlaceId == 7465136166 or game.PlaceId == 3978370137 or game.PlaceId == 6811831486 or game.PlaceId == 11424731604 or game.PlaceId == 1730877806 then  
+loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/800d95d58d7bbf98d05804ea8f356994.lua"))()
+else
+loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/fe633cae06bd4f51eb0fd0dd60a36a73.lua"))()
+end
