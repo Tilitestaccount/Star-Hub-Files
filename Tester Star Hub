@@ -1,1 +1,7 @@
-loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/bef4fb7d1f27e0f597c1066b6584e4bd.lua"))()
+script_id = "481c69d3d54b50c3493125c294fc08bb";
+if isfile(string.format("%s-cache.lua",script_id))then 
+    pcall(delfile,string.format("%s-cache.lua",script_id))
+end;
+getgenv().language=language=="english"and""or language;
+getgenv().parental_controls=parental_controls;
+loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/d4a4f7529eab314d5e1ce506ef250113.lua"))()
