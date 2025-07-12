@@ -1,4 +1,3 @@
-script_id = "481c69d3d54b50c3493125c294fc08bb";
 if isfile(string.format("%s-cache.lua",script_id))then 
     pcall(delfile,string.format("%s-cache.lua",script_id))
 end;
