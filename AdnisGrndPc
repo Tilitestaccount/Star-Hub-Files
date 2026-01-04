@@ -1,9 +1,13 @@
-bypassworked = nil
+-- Adonis Bypass Framework
+-- Author: xiaomao
+-- QQ: 1303323893
+-- Version: v1.0.2
+
 repeat
     task.wait()
 until game:IsLoaded()
-
-local player = game:GetService("Players").LocalPlayer
+boatinn = nil
+local player = game.Players.LocalPlayer
 
 local CONFIG = {
     DELAY = 12,
@@ -13,7 +17,7 @@ local CONFIG = {
     BLOCK_REMOTES = true,
 }
 
-print("starting the bypass")
+print("Loading bypass framework...")
 
 -- Layer 1: External bypass (DISABLED)
 -- local bypassLoaded = false
@@ -180,7 +184,7 @@ if CONFIG.BLOCK_REMOTES then
                 end)
                 
                 setreadonly(mt, true)
-                print("Remote interception load")
+                print("Remote interception enabled")
             end
         end)
     end
@@ -297,7 +301,7 @@ if not getgenv().getgcWrapped then
             return realGetGC(...)
         end
         
-        print("GetGC wrapper load")
+        print("GetGC wrapper enabled")
     end)
 end
 
@@ -344,7 +348,7 @@ if not getgenv().callStackSpoofed then
             return calling
         end
         
-        print("stack spoof load")
+        print("Call stack spoofing enabled")
     end)
 end
 
@@ -385,7 +389,7 @@ if not getgenv().detectedHookAttempted then
                     end)
                     
                     if hookSuccess then
-                        print("dtc hook load")
+                        print("Detection hook installed successfully")
                     end
                     break
                 end
@@ -403,12 +407,11 @@ local bypassSuccess = bypassLoaded or metaProtected
 task.wait(0.5)
 
 if bypassSuccess then
-    print("fw loaded")
-    print("STAR HUB: AC BYPASSED")
-    bypassworked = true
+    print("|--FRAMEWORK LOADED--|")
+    print("Anti-cheat bypass successful")
+    boatinn = true
 else
     print("Anti-cheat bypass failed")
-
 end
 
 return {
@@ -442,3 +445,4 @@ return {
         return bypassLoaded or (metaProtected and CONFIG.BLOCK_REMOTES)
     end,
 }
+
