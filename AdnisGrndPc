@@ -6,7 +6,7 @@
 repeat
     task.wait()
 until game:IsLoaded()
-boatinn = nil
+local boatinn = nil
 local player = game.Players.LocalPlayer
 
 local CONFIG = {
