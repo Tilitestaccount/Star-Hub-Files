@@ -1,9 +1,9 @@
-
+bypassworked = nil
 repeat
     task.wait()
 until game:IsLoaded()
 
-local player = game.Players.LocalPlayer
+local player = game:GetService("Players").LocalPlayer
 
 local CONFIG = {
     DELAY = 12,
@@ -405,6 +405,7 @@ task.wait(0.5)
 if bypassSuccess then
     print("fw loaded")
     print("STAR HUB: AC BYPASSED")
+    bypassworked = true
 else
     print("Anti-cheat bypass failed")
 
@@ -441,4 +442,3 @@ return {
         return bypassLoaded or (metaProtected and CONFIG.BLOCK_REMOTES)
     end,
 }
-task.wait(1)
