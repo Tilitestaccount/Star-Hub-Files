@@ -6,7 +6,7 @@
 repeat
     task.wait()
 until game:IsLoaded()
-local boatinn = nil
+
 local player = game.Players.LocalPlayer
 
 local CONFIG = {
@@ -409,7 +409,6 @@ task.wait(0.5)
 if bypassSuccess then
     print("|--FRAMEWORK LOADED--|")
     print("Anti-cheat bypass successful")
-    boatinn = true
 else
     print("Anti-cheat bypass failed")
 end
@@ -446,7 +445,3 @@ return {
     end,
 }
 
-repeat
-    task.wait()
-until boatinn == true
- 
