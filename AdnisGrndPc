@@ -446,3 +446,7 @@ return {
     end,
 }
 
+repeat
+    task.wait()
+until boatinn == true
+ 
