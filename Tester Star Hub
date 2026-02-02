@@ -10,4 +10,8 @@ end
 elseif game.PlaceId == 14070029709 or game.CreatorId == 32740991 then
 -- TS
 loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/3ae81135112eac39e25b6e063819b93a.lua"))()
+elseif game.PlaceId == 6360478118 or game.PlaceId == 7465136166 or game.PlaceId == 3978370137 or game.PlaceId == 6811831486 or game.PlaceId == 11424731604 or game.CreatorId == 3229308 or game.PlaceId == 1730877806 then  
+-- GPO !!!
+loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/86e40a0d18b507addd1e13c9bca8864f.lua"))()
+
 end
