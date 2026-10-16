@@ -1,17 +1,76 @@
-if Game.PlaceId == 9391468976 or Game.CreatorId == 16357742 then
--- JJS
-loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/d074cb926596a65c2c73d2965d9c109f.lua"))()
-elseif game.PlaceId == 4111023553 or game.PlaceId == 137000980549032 or game.PlaceId == 86761619761103 or game.PlaceId == 5735553160 or game.PlaceId == 6032399813 or game.PlaceId == 6473861193 or game.PlaceId == 6832934465 or game.PlaceId == 6832944305 or game.PlaceId == 8668476218 or game.PlaceId == 8712356310 or game.PlaceId == 9528956055 or game.PlaceId == 9598091549 or game.PlaceId == 9854906953 or game.PlaceId == 11108929042 or game.PlaceId == 12522881268 or game.PlaceId == 12522889886 or game.PlaceId == 12522892314  or game.PlaceId == 12559711136 or game.PlaceId == 13789332988 or game.PlaceId == 13891478131 or game.PlaceId == 14299563111 or game.PlaceId == 14759951085 or game.PlaceId == 14910041900 or game.PlaceId == 15043797592 or game.PlaceId == 15607970249 or game.PlaceId == 18139512873 then
--- deepwken
-local suc2, scr2 = pcall(game.HttpGet, game, "https://api.luarmor.net/files/v4/loaders/d4a4f7529eab314d5e1ce506ef250113.lua")
-if suc2 and scr2 then 
-  pcall(loadstring(scr2))
+if shared and shared.StarHub then
+    return
 end
-elseif game.PlaceId == 14070029709 or game.CreatorId == 32740991 then
--- TS
-loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/3ae81135112eac39e25b6e063819b93a.lua"))()
-elseif game.PlaceId == 6360478118 or game.PlaceId == 7465136166 or game.PlaceId == 3978370137 or game.PlaceId == 6811831486 or game.PlaceId == 11424731604 or game.CreatorId == 3229308 or game.PlaceId == 1730877806 then  
--- GPO !!!
-loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/86e40a0d18b507addd1e13c9bca8864f.lua"))()
 
+local pid = game.PlaceId
+local cid = game.CreatorId
+
+local DEEPWOKEN = {
+    4111023553, 137000980549032, 86761619761103, 5735553160, 6032399813, 6473861193,
+    6832934465, 6832944305, 8668476218, 8712356310, 9528956055, 9598091549, 9854906953,
+    11108929042, 12522881268, 12522889886, 12522892314, 12559711136, 13789332988,
+    13891478131, 14299563111, 14759951085, 14910041900, 15043797592, 15607970249, 18139512873,
+}
+local GPO = { 6360478118, 7465136166, 3978370137, 6811831486, 11424731604, 1730877806 }
+
+local function any(list, v)
+    for _, x in ipairs(list) do
+        if x == v then
+            return true
+        end
+    end
+    return false
+end
+
+local url
+if pid == 9391468976 or cid == 16357742 then
+    url = "https://api.luarmor.net/files/v4/loaders/d074cb926596a65c2c73d2965d9c109f.lua"
+elseif any(DEEPWOKEN, pid) then
+    url = "https://api.luarmor.net/files/v4/loaders/d4a4f7529eab314d5e1ce506ef250113.lua"
+elseif pid == 14070029709 or cid == 32740991 then
+    url = "https://api.luarmor.net/files/v3/loaders/3ae81135112eac39e25b6e063819b93a.lua"
+elseif any(GPO, pid) or cid == 3229308 then
+    url = "https://api.luarmor.net/files/v4/loaders/86e40a0d18b507addd1e13c9bca8864f.lua"
+end
+
+if not url then
+    return
+end
+
+if not game:IsLoaded() then
+    game.Loaded:Wait()
+end
+
+local Players = game:GetService("Players")
+repeat
+    task.wait()
+until Players.LocalPlayer
+
+pcall(function()
+    local k = script_key or (getgenv and getgenv().script_key)
+    if k then
+        script_key = k
+        if getgenv then
+            getgenv().script_key = k
+        end
+    end
+end)
+
+for attempt = 1, 5 do
+    if shared and shared.StarHub then
+        return
+    end
+
+    local ok, res = pcall(game.HttpGet, game, url)
+
+    if ok and type(res) == "string" and #res > 100 then
+        local chunk = loadstring(res)
+
+        if chunk then
+            pcall(chunk)
+            return
+        end
+    end
+
+    task.wait(attempt)
 end
