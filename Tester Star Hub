@@ -68,15 +68,83 @@ repeat
 	task.wait()
 until Players.LocalPlayer
 
+local function readKey()
+	local k = script_key
+	if type(k) ~= "string" or #k < 10 then
+		pcall(function()
+			k = getgenv().script_key
+		end)
+	end
+	if type(k) ~= "string" or #k < 10 then
+		k = rawget(_G, "script_key")
+	end
+	if type(k) ~= "string" or #k < 10 then
+		return nil
+	end
+	return (string.gsub(k, "%s", ""))
+end
+
+local key = readKey()
+local keyWaited = os.clock()
+while not key and os.clock() - keyWaited < 3 do
+	task.wait(0.25)
+	key = readKey()
+end
+
+local function notify(text)
+	pcall(function()
+		game:GetService("StarterGui"):SetCore("SendNotification", {
+			Title = "Star Hub",
+			Text = text,
+			Duration = 15,
+		})
+	end)
+end
+
+if not key then
+	notify("No key found. Put script_key=\"YOUR KEY\" on the first line.")
+	return
+end
+
+script_key = key
 pcall(function()
-	local k = script_key or (getgenv and getgenv().script_key)
-	if k then
-		script_key = k
-		if getgenv then
-			getgenv().script_key = k
+	getgenv().script_key = key
+end)
+
+local scriptId = string.match(url, "loaders/(%x+)%.lua")
+local okLib, api = pcall(function()
+	return loadstring(game:HttpGet("https://sdkapi-public.luarmor.net/library.lua"))()
+end)
+
+if scriptId and okLib and type(api) == "table" and type(api.check_key) == "function" then
+	api.script_id = scriptId
+
+	local status = nil
+	for attempt = 1, 4 do
+		local okCheck, result = pcall(api.check_key, key)
+		if okCheck and type(result) == "table" then
+			status = result
+			local code = result.code
+			if code ~= "UNKNOWN_ERROR" and code ~= "TIME_ERROR" and code ~= "SECURITY_ERROR" then
+				break
+			end
+		end
+		task.wait(attempt)
+	end
+
+	if status and status.code ~= "KEY_VALID" then
+		notify(string.format("Key check: %s (%s)", tostring(status.code), tostring(status.message)))
+		if
+			status.code == "KEY_INVALID"
+			or status.code == "KEY_INCORRECT"
+			or status.code == "KEY_EXPIRED"
+			or status.code == "KEY_BANNED"
+			or status.code == "KEY_HWID_LOCKED"
+		then
+			return
 		end
 	end
-end)
+end
 
 pcall(function()
 	if getgenv then
